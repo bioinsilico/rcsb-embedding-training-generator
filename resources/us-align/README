@@ -1,0 +1,2 @@
+g++ -O3 -ffast-math -o USalign USalign.cpp
+./USalign ~/data/pdb/3LOR.cif.gz ~/data/pdb/7PI0.cif.gz -chain1 A -chain2 S

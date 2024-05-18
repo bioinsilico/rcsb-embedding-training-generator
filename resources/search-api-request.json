@@ -1,0 +1,36 @@
+{
+  "query": {
+    "type": "terminal",
+    "label": "text",
+    "service": "text",
+    "parameters": {
+      "attribute": "rcsb_entry_info.structure_determination_methodology",
+      "operator": "exact_match",
+      "value": "experimental"
+    }
+  },
+  "return_type": "polymer_entity",
+  "request_options": {
+    "group_by_return_type": "representatives",
+    "group_by": {
+      "aggregation_method": "sequence_identity",
+      "ranking_criteria_type": {
+        "sort_by": "rcsb_entry_info.resolution_combined",
+        "direction": "asc"
+      },
+      "similarity_cutoff": 70
+    },
+    "results_verbosity":"compact",
+    "return_all_hits":true,
+    "results_content_type": [
+      "experimental"
+    ],
+    "sort": [
+      {
+        "sort_by": "score",
+        "direction": "desc"
+      }
+    ],
+    "scoring_strategy": "combined"
+  }
+}
