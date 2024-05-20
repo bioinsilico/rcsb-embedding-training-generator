@@ -55,10 +55,16 @@ if __name__ == "__main__":
         required=True,
         help="Output folder ",
     )
+    parser.add_argument(
+        "--workers",
+        type=int,
+        help="Output folder ",
+    )
     cfg = parser.parse_args()
 
     US_CMD = cfg.us_align_bin
     PDB_PATH = cfg.pdb_path
+    n_workers = cfg.workers if cfg.workers else 1
 
     query_list = [(r.strip().split(".")[0], r.strip().split(".")[1]) for r in open(cfg.query_list_file)]
     target_list = [(r.strip().split(".")[0], r.strip().split(".")[1]) for r in open(cfg.target_list_file)]
@@ -66,7 +72,7 @@ if __name__ == "__main__":
     ready_pairs = ReadyPairs()
 
     for (pdb_i, ch_i) in query_list:
-        executor = ThreadPoolExecutor(max_workers=6)
+        executor = ThreadPoolExecutor(max_workers=n_workers)
         future_to_command = {}
         for (pdb_j, ch_j) in target_list:
             if ready_pairs.is_ready(pdb_i, ch_i, pdb_j, ch_j):
