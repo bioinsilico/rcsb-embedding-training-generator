@@ -5,8 +5,7 @@ from utils.ready_pairs import ReadyPairs
 from utils.run_command import run_command
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
-US_CMD = "/Users/joan/devel/rcsb-embedding-training-generator/resources/us-align/USalign"
-PDB_PATH = "/Users/joan/data/pdb"
+
 
 
 def tm_align(entry_a, ch_a, entry_b, ch_b):
@@ -21,11 +20,22 @@ def tm_score(entry_a, ch_a, entry_b, ch_b):
 
 
 if __name__ == "__main__":
-
     parser = argparse.ArgumentParser(
         description="Use compute_tm_score_list \
         to calculate TM-score between structure chains of a query and target lists",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    parser.add_argument(
+        "--pdb_path",
+        type=str,
+        required=True,
+        help="Folder with PDB files",
+    )
+    parser.add_argument(
+        "--us_align_bin",
+        type=str,
+        required=True,
+        help="US-align exec",
     )
     parser.add_argument(
         "--query_list_file",
@@ -46,6 +56,9 @@ if __name__ == "__main__":
         help="Output folder ",
     )
     cfg = parser.parse_args()
+
+    US_CMD = cfg.us_align_bin
+    PDB_PATH = cfg.pdb_path
 
     query_list = [(r.strip().split(".")[0], r.strip().split(".")[1]) for r in open(cfg.query_list_file)]
     target_list = [(r.strip().split(".")[0], r.strip().split(".")[1]) for r in open(cfg.target_list_file)]
