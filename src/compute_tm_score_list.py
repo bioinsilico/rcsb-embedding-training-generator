@@ -87,4 +87,3 @@ if __name__ == "__main__":
                     file.write(f"{pdb_i}.{ch_i},{pdb_j}.{ch_j},{result}\n")
                 except Exception as exc:
                     raise Exception(f"{pdb_i}.{ch_i},{pdb_j}.{ch_j},{tm_score(pdb_i, ch_i, pdb_j, ch_j)}")
-        break
