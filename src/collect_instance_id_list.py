@@ -1,3 +1,5 @@
+import os
+
 import pymongo
 
 from entity_50 import ENTITY_50
@@ -29,5 +31,36 @@ def collect_instances_from_entities(entity_list, thr):
             file.write(f"{entry_id}\n")
 
 
+def split_file(file_path, n):
+    if n < 1:
+        raise ValueError("Number of chunks must be at least 1.")
+
+    with open(file_path, 'r') as file:
+        lines = file.readlines()
+
+    total_lines = len(lines)
+    chunk_size = total_lines // n
+    remainder = total_lines % n
+
+    base_name, ext = os.path.splitext(file_path)
+
+    chunks = []
+    start = 0
+
+    for i in range(n):
+        end = start + chunk_size + (1 if i < remainder else 0)
+        chunk_lines = lines[start:end]
+        chunk_file = f"{base_name}-{i+1}{ext}"
+        with open(chunk_file, 'w') as chunk:
+            chunk.writelines(chunk_lines)
+        chunks.append(chunk_file)
+        start = end
+
+    return chunks
+
+
 if __name__ == "__main__":
-    collect_instances_from_entities(ENTITY_50, "50")
+    thr = "50"
+    entity_list = ENTITY_50
+    collect_instances_from_entities(entity_list, thr)
+    split_file(f"../target/instance{thr}_list.tsv", 100)

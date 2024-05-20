@@ -15,6 +15,8 @@ def run_command(command):
         # Get the standard output
         stdout = result.stdout
         stderr = result.stderr
+        if stderr:
+            print(result.stderr.strip())
         # Return both stdout and stderr for further processing if needed
         return stdout, stderr
 

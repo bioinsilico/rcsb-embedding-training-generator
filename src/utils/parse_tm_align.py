@@ -31,4 +31,8 @@ def parse_tm_align(output):
     if tm_score_2_match:
         parsed_data['TM_Score_2'] = float(tm_score_2_match.group(1))
 
+    if 'TM_Score_1' not in parsed_data or 'TM_Score_2' not in parsed_data:
+        parsed_data['TM_Score_1'] = -1.
+        parsed_data['TM_Score_2'] = -1.
+
     return parsed_data
