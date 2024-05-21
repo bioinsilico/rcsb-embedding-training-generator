@@ -87,4 +87,5 @@ if __name__ == "__main__":
                     result = future.result()
                     file.write(f"{pdb_i}.{ch_i},{pdb_j}.{ch_j},{result}\n")
                 except Exception as exc:
-                    raise Exception(f"{pdb_i}.{ch_i},{pdb_j}.{ch_j},{tm_score(pdb_i, ch_i, pdb_j, ch_j)}")
+                    file.write(f"{pdb_i}.{ch_i},{pdb_j}.{ch_j},-1\n")
+                    print(f"{pdb_i}.{ch_i},{pdb_j}.{ch_j},{exc}")
