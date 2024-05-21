@@ -1,11 +1,10 @@
 import argparse
+import os.path
 
 from utils.parse_tm_align import parse_tm_align
 from utils.ready_pairs import ReadyPairs
 from utils.run_command import run_command
 from concurrent.futures import ThreadPoolExecutor, as_completed
-
-
 
 
 def tm_align(entry_a, ch_a, entry_b, ch_b):
@@ -72,6 +71,8 @@ if __name__ == "__main__":
     ready_pairs = ReadyPairs()
 
     for (pdb_i, ch_i) in query_list:
+        if os.path.isfile(f'{cfg.out_path}/{pdb_i}.{ch_i}.tm_score.csv'):
+            continue
         executor = ThreadPoolExecutor(max_workers=n_workers)
         future_to_command = {}
         for (pdb_j, ch_j) in target_list:
