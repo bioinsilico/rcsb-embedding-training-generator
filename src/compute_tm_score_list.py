@@ -87,5 +87,5 @@ if __name__ == "__main__":
                     result = future.result()
                     file.write(f"{pdb_i}.{ch_i},{pdb_j}.{ch_j},{result}\n")
                 except Exception as exc:
-                    file.write(f"{pdb_i}.{ch_i},{pdb_j}.{ch_j},-1\n")
+                    file.write(f"{pdb_i}.{ch_i},{pdb_j}.{ch_j},-1.0\n")
                     print(f"{pdb_i}.{ch_i},{pdb_j}.{ch_j},{exc}")
