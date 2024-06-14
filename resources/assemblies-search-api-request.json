@@ -1,0 +1,73 @@
+{
+  "query": {
+    "type": "group",
+    "nodes": [
+      {
+        "type": "terminal",
+        "service": "text",
+        "parameters": {
+          "attribute": "rcsb_entry_info.structure_determination_methodology",
+          "operator": "exact_match",
+          "value": "experimental"
+        }
+      },
+      {
+        "type": "terminal",
+        "service": "text",
+        "parameters": {
+          "attribute": "rcsb_assembly_info.polymer_entity_instance_count_DNA",
+          "operator": "equals",
+          "negation": false,
+          "value": 0
+        }
+      },
+      {
+        "type": "terminal",
+        "service": "text",
+        "parameters": {
+          "attribute": "rcsb_assembly_info.polymer_entity_instance_count_RNA",
+          "operator": "equals",
+          "negation": false,
+          "value": 0
+        }
+      },
+      {
+        "type": "terminal",
+        "service": "text",
+        "parameters": {
+          "attribute": "rcsb_assembly_info.polymer_entity_instance_count_protein",
+          "operator": "greater",
+          "negation": false,
+          "value": 1
+        }
+      },
+      {
+        "type": "terminal",
+        "service": "text",
+        "parameters": {
+          "attribute": "rcsb_assembly_info.polymer_entity_instance_count_protein",
+          "operator": "less",
+          "negation": false,
+          "value": 7
+        }
+      }
+    ],
+    "logical_operator": "and",
+    "label": "text"
+  },
+  "return_type": "assembly",
+  "request_options": {
+    "results_verbosity":"compact",
+    "return_all_hits":true,
+    "results_content_type": [
+      "experimental"
+    ],
+    "sort": [
+      {
+        "sort_by": "score",
+        "direction": "desc"
+      }
+    ],
+    "scoring_strategy": "combined"
+  }
+}
