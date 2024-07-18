@@ -9,7 +9,7 @@ from entity_30 import ENTITY_30
 
 def collect_instances_from_entities(entity_list, thr):
     db_client = pymongo.MongoClient(
-        "mongodb://updater:w31teQuerie5@10.20.2.171:27017/?connectTimeoutMS=3000000&socketTimeoutMS=3000000"
+        "mongodb://updater:w31teQuerie5@132.249.210.246:27017/?connectTimeoutMS=3000000&socketTimeoutMS=3000000"
         # "mongodb://localhost:27017"
     )
     dw = db_client["dw"]
@@ -21,7 +21,10 @@ def collect_instances_from_entities(entity_list, thr):
             auth_asym_id = core_entity.find(
                 {"rcsb_id": entity_id},
                 {"rcsb_polymer_entity_container_identifiers.auth_asym_ids": 1}
-            )[0]["rcsb_polymer_entity_container_identifiers"]["auth_asym_ids"][0]
+            )
+            if len(list(auth_asym_id.clone())) == 0:
+                continue
+            auth_asym_id = auth_asym_id[0]["rcsb_polymer_entity_container_identifiers"]["auth_asym_ids"][0]
             entries.add(entity_id.split('_')[0])
             print(f"{entity_id.split('_')[0]}.{auth_asym_id}")
             file.write(f"{entity_id.split('_')[0]}.{auth_asym_id}\n")
@@ -60,7 +63,7 @@ def split_file(file_path, n):
 
 
 if __name__ == "__main__":
-    thr = "50"
-    entity_list = ENTITY_50
+    thr = "30"
+    entity_list = ENTITY_30
     collect_instances_from_entities(entity_list, thr)
     split_file(f"../target/instance{thr}_list.tsv", 100)

@@ -23,7 +23,9 @@ def download_file(url, folder_path, file_name=None):
 
 
 if __name__ == "__main__":
-    for row in open("../target/entry50_list.tsv"):
+    for row in open("../target/entry30_list.tsv"):
         entry_id = row.strip()
+        if os.path.isfile(f"/Users/joan/data/pdb/{entry_id}.cif.gz"):
+            continue
         print(f"Downloading {entry_id}")
         download_file(f"https://files.rcsb.org/download/{entry_id}.cif.gz", "/Users/joan/data/pdb")
