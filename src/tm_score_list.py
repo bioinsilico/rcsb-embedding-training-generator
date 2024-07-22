@@ -93,6 +93,13 @@ def main():
         required=True,
         help="Number of tasks",
     )
+    parser.add_argument(
+        "--buffer_size",
+        type=int,
+        required=False,
+        default=1000,
+        help="Number of tasks",
+    )
     cfg = parser.parse_args()
     tm_score = config_tm_score(cfg.us_align_bin, cfg.pdb_path)
     proteins = [(r.strip().split(".")[0], r.strip().split(".")[1]) for r in open(cfg.list_file)]
@@ -113,7 +120,7 @@ def main():
     local_results = load_results_from_file(results_filename)
 
     buffer = []
-    buffer_chunk_size = 1000
+    buffer_chunk_size = cfg.buffer_size
 
     for ((pdb_i, ch_i), (pdb_j, ch_j)) in generate_pairs(proteins, start_idx, end_idx):
         if build_key(pdb_i, ch_i, pdb_j, ch_j) in local_results:
