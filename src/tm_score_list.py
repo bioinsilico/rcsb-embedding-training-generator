@@ -95,9 +95,7 @@ def main():
     )
     cfg = parser.parse_args()
     tm_score = config_tm_score(cfg.us_align_bin, cfg.pdb_path)
-    current_proteins = set([r.split(".")[0] for r in os.listdir(cfg.pdb_path)])
-    proteins = [(r.strip().split(".")[0], r.strip().split(".")[1]) for r in open(cfg.list_file) if
-                r.strip().split(".")[0] in current_proteins]
+    proteins = [(r.strip().split(".")[0], r.strip().split(".")[1]) for r in open(cfg.list_file)]
     num_proteins = len(proteins)
 
     rank = cfg.rank
@@ -115,7 +113,7 @@ def main():
     local_results = load_results_from_file(results_filename)
 
     buffer = []
-    buffer_chunk_size = 10000
+    buffer_chunk_size = 1000
 
     for ((pdb_i, ch_i), (pdb_j, ch_j)) in generate_pairs(proteins, start_idx, end_idx):
         if build_key(pdb_i, ch_i, pdb_j, ch_j) in local_results:
