@@ -37,8 +37,10 @@ def main():
     num_proteins = len(proteins)
 
     local_results = set({})
-    for n in range(0,1000):
+    for n in range(0, 1000):
         local_results.update(load_results_from_file(f"{cfg.tm_score_path}/tm_scores_rank_{n}.csv"))
+    for n in range(0, 1000):
+        local_results.update(load_results_from_file(f"{cfg.tm_score_path}/tm_scores_pair_{n}.csv"))
 
     with open(cfg.tm_score_missing_list_file, 'w', newline='') as f:
         for ((pdb_i, ch_i), (pdb_j, ch_j)) in generate_pairs(proteins, 0, num_proteins):
