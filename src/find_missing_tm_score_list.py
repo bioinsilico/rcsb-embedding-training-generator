@@ -1,11 +1,5 @@
 import argparse
-import os
-import csv
-
 from tm_score_list import load_results_from_file, generate_pairs, build_key
-from utils.parse_tm_align import parse_tm_align
-
-from utils.run_command import run_command
 
 
 def main():
