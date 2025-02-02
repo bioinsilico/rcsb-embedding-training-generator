@@ -25,4 +25,6 @@ if __name__ == "__main__":
         for (pdb_i, pdb_j, score) in csv_reader:
             cmd = f"{US_ALIGN_BIN} -mm 1 -ter 0 {PDB_PATH}/{pdb_i}.pdb {PDB_PATH}/{pdb_j}.pdb"
             stdout, stderr = run_command(cmd)
-            print(parse_tm_align(stdout))
+            tm_stdout = parse_tm_align(stdout)
+            s = tm_stdout['TM_Score_1'] if tm_stdout['TM_Score_1'] > tm_stdout['TM_Score_2'] else tm_stdout['TM_Score_2']
+            print(pdb_i, pdb_j, score, s)
