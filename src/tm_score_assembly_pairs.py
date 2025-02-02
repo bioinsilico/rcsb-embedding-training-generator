@@ -40,8 +40,8 @@ if __name__ == "__main__":
     PDB_PATH = cfg.pdb_path
     with open(cfg.out_file, 'w') as out:
         with open(cfg.list_file, 'r') as file:
-            csv_reader = csv.reader(file)
-            for (pdb_i, pdb_j, score) in csv_reader:
+            for row in file:
+                (pdb_i, pdb_j, score) = row.strip().split(" ")
                 cmd = f"{US_ALIGN_BIN} -mm 1 -ter 0 {PDB_PATH}/{pdb_i}.pdb {PDB_PATH}/{pdb_j}.pdb"
                 stdout, stderr = run_command(cmd)
                 tm_stdout = parse_tm_align(stdout)
